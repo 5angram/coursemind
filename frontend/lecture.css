@@ -1,0 +1,825 @@
+/* =========================
+   BASIC RESET
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #070b18;
+
+    color: white;
+
+    min-height: 100vh;
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar {
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 30px;
+
+    border-bottom: 1px solid #202943;
+
+    background: #090e20;
+}
+
+
+.logo {
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+
+.back {
+
+    margin-left: 35px;
+
+    color: #aeb9d8;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+
+.back:hover {
+
+    color: white;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+
+    max-width: 1200px;
+
+    margin: 35px auto;
+
+    padding: 0 25px;
+}
+
+
+/* =========================
+   LECTURE HEADER
+========================= */
+
+.lecture-header {
+
+    margin-bottom: 25px;
+}
+
+
+.lecture-number {
+
+    color: #8e78ff;
+
+    font-size: 14px;
+
+    margin-bottom: 8px;
+}
+
+
+.lecture-title {
+
+    font-size: 28px;
+
+    line-height: 1.3;
+
+    margin-bottom: 10px;
+}
+
+
+.lecture-meta {
+
+    color: #9eadd0;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   VIDEO
+========================= */
+
+.video-container {
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    background: black;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    border: 1px solid #252d48;
+}
+
+
+.video-container iframe {
+
+    width: 100%;
+
+    height: 100%;
+
+    border: none;
+}
+
+
+/* =========================
+   BOTTOM SECTION
+========================= */
+
+.bottom-section {
+
+    display: grid;
+
+    grid-template-columns: 1fr 420px;
+
+    gap: 25px;
+
+    margin-top: 25px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+
+    background: #0c1326;
+
+    border: 1px solid #252d48;
+
+    border-radius: 14px;
+
+    padding: 22px;
+}
+
+
+.card h2 {
+
+    font-size: 18px;
+
+    margin-bottom: 12px;
+}
+
+
+.card p {
+
+    color: #9eadd0;
+
+    line-height: 1.6;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   AI CARD
+========================= */
+
+.ai-card {
+
+    border-color: #5140a8;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151032,
+            #0c1326
+        );
+}
+
+
+/* =========================
+   QUESTION BOX
+========================= */
+
+.question-box {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+
+.question-box input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 12px;
+
+    border-radius: 9px;
+
+    border: 1px solid #343d5c;
+
+    outline: none;
+
+    background: #090e20;
+
+    color: white;
+
+    font-size: 14px;
+}
+
+
+.question-box input::placeholder {
+
+    color: #727e9f;
+}
+
+
+.question-box input:focus {
+
+    border-color: #6747ff;
+}
+
+
+/* =========================
+   ASK BUTTON
+========================= */
+
+.ai-button {
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #6747ff;
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+.ai-button:hover {
+
+    background: #795cff;
+}
+
+
+.ai-button:disabled {
+
+    opacity: 0.7;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   AI RESULT
+========================= */
+
+.ai-result {
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #252d48;
+}
+
+
+/* =========================
+   QUESTION
+========================= */
+
+.ai-question {
+
+    color: #c7d0eb;
+
+    margin-bottom: 15px;
+
+    line-height: 1.6;
+}
+
+
+.ai-question strong {
+
+    color: #8e78ff;
+
+    margin-right: 5px;
+}
+
+
+.ai-question span {
+
+    color: white;
+}
+
+
+/* =========================
+   ANSWER
+========================= */
+
+.ai-answer {
+
+    background: #090e20;
+
+    border: 1px solid #252d48;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    margin-bottom: 15px;
+}
+
+
+.ai-answer strong {
+
+    display: block;
+
+    color: #8e78ff;
+
+    margin-bottom: 8px;
+}
+
+
+.ai-answer p {
+
+    color: #d8def0;
+
+    line-height: 1.7;
+
+    white-space: pre-wrap;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   SOURCES
+========================= */
+
+.ai-sources {
+
+    margin-top: 15px;
+
+    color: #9eadd0;
+
+    font-size: 13px;
+}
+
+
+.ai-sources strong {
+
+    color: white;
+
+    display: block;
+
+    margin-bottom: 8px;
+}
+
+
+.source-item {
+
+    display: inline-block;
+
+    margin: 5px 6px 0 0;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    background: #151032;
+
+    border: 1px solid #5140a8;
+
+    color: #bdb0ff;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading {
+
+    text-align: center;
+
+    color: #9eadd0;
+
+    padding: 80px 20px;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.ai-error {
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    background: #2a1117;
+
+    border: 1px solid #6b2737;
+
+    color: #ff9eae;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    .bottom-section {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .lecture-title {
+
+        font-size: 22px;
+
+    }
+
+
+    .topbar {
+
+        padding: 0 15px;
+
+    }
+
+
+    .container {
+
+        margin-top: 25px;
+
+        padding: 0 15px;
+
+    }
+
+
+    .question-box {
+
+        flex-direction: column;
+
+    }
+
+
+    .ai-button {
+
+        width: 100%;
+
+    }
+
+}
+
+/* =========================
+   AI CHAT HISTORY
+========================= */
+
+.chat-history {
+    margin-top: 20px;
+}
+
+.chat-message {
+    padding: 18px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    background: #f8f9fa;
+}
+
+.chat-message .ai-question {
+    margin-bottom: 12px;
+}
+
+.chat-message .ai-answer {
+    margin-bottom: 12px;
+}
+
+.chat-message .ai-answer p {
+    margin-top: 8px;
+    line-height: 1.6;
+}
+
+.chat-message .ai-sources {
+    margin-top: 10px;
+}
+
+.source-item {
+    display: inline-block;
+    margin: 6px 6px 0 0;
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: #e9ecef;
+    font-size: 12px;
+}
+
+/* =========================
+   LECTURE NAVIGATION
+========================= */
+
+.lecture-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.navigation-button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #111;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.navigation-button:hover {
+    opacity: 0.85;
+}
+
+.navigation-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* =========================
+   LECTURE PROGRESS
+========================= */
+
+.lecture-progress {
+    margin-top: 18px;
+    max-width: 600px;
+}
+
+.progress-text {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e5e5e5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #111;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+/* =========================
+   COMPLETE LECTURE
+========================= */
+
+.completion-section {
+    margin-top: 15px;
+}
+
+.complete-button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #111;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.complete-button:hover {
+    opacity: 0.85;
+}
+
+.complete-button.completed {
+    background: #4caf50;
+    cursor: default;
+}
+
+/* =====================================================
+   LECTURE SUMMARY
+===================================================== */
+
+.lecture-summary {
+    color: #d8def0;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.summary-loading {
+    color: #9eadd0;
+}
+
+.summary-content {
+    white-space: pre-wrap;
+}
+
+
+
+/* =========================================================
+   COURSEMIND MONOCHROME LECTURE UI + CHAT UX
+========================================================= */
+:root {
+  color-scheme: dark;
+  --cm-bg: #090909;
+  --cm-card: #111111;
+  --cm-raised: #1a1a1a;
+  --cm-border: #303030;
+  --cm-text: #f5f5f5;
+  --cm-muted: #a3a3a3;
+}
+html, body { background: var(--cm-bg) !important; color: var(--cm-text); }
+body { font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.topbar {
+  background: rgba(10,10,10,.94) !important;
+  border-color: #252525 !important;
+  backdrop-filter: blur(14px);
+}
+.logo { letter-spacing: -.5px; }
+.back { color: #c4c4c4 !important; }
+.back:hover { color: #fff !important; }
+.lecture-number { color: #c4c4c4 !important; }
+.lecture-meta, .card p, .summary-loading { color: var(--cm-muted) !important; }
+.video-container { border-color: #303030 !important; border-radius: 16px !important; }
+.card {
+  background: #111 !important;
+  border-color: #2d2d2d !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+}
+.ai-card { background: #111 !important; border-color: #333 !important; }
+.question-box { align-items: stretch; }
+.question-box input {
+  min-height: 48px;
+  background: #0c0c0c !important;
+  border-color: #373737 !important;
+  border-radius: 12px !important;
+  color: #f5f5f5 !important;
+  padding: 13px 14px !important;
+}
+.question-box input::placeholder { color: #777 !important; }
+.question-box input:focus { border-color: #777 !important; box-shadow: 0 0 0 3px #ffffff0c; }
+.ai-button, .navigation-button, .complete-button {
+  background: #f2f2f2 !important;
+  color: #111 !important;
+  border: 1px solid #f2f2f2 !important;
+  border-radius: 11px !important;
+  font-weight: 650;
+}
+.ai-button:hover, .navigation-button:hover, .complete-button:hover { background: #d4d4d4 !important; }
+.ai-button:disabled, .navigation-button:disabled, .complete-button:disabled { opacity: .45; }
+.complete-button.completed { background: #333 !important; color: #fff !important; border-color: #444 !important; }
+.progress-bar { background: #292929 !important; }
+.progress-fill { background: #f5f5f5 !important; }
+.lecture-summary { color: #dedede !important; }
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 520px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 4px 4px 0;
+  margin-top: 20px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #555 #151515;
+  scroll-behavior: smooth;
+}
+.chat-message {
+  padding: 15px !important;
+  margin: 0 !important;
+  border-radius: 14px !important;
+  background: #171717 !important;
+  border: 1px solid #303030 !important;
+  color: #e5e5e5;
+}
+.chat-message .ai-question {
+  color: #d4d4d4 !important;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.chat-message .ai-question strong { color: #fff !important; }
+.chat-message .ai-question span { color: #bdbdbd !important; }
+.chat-message .ai-answer {
+  background: #101010 !important;
+  border-color: #2e2e2e !important;
+  margin-bottom: 10px;
+}
+.chat-message .ai-answer strong { color: #fff !important; }
+.chat-message .ai-answer p {
+  color: #e5e5e5 !important;
+  line-height: 1.75 !important;
+  overflow-wrap: anywhere;
+}
+.chat-message .ai-sources { color: #a3a3a3 !important; }
+.chat-message .ai-sources strong { color: #f5f5f5 !important; }
+.source-item {
+  background: #242424 !important;
+  border-color: #414141 !important;
+  color: #dedede !important;
+  border-radius: 7px !important;
+  overflow-wrap: anywhere;
+}
+.ai-error {
+  background: #1b1b1b !important;
+  border-color: #555 !important;
+  color: #eee !important;
+}
+.loading { color: #a3a3a3 !important; }
+@media (max-width: 800px) {
+  .question-box { flex-direction: row !important; }
+  .ai-button { width: auto !important; padding: 12px 14px !important; }
+  .lecture-navigation { gap: 10px; }
+  .navigation-button { padding: 10px 12px !important; }
+  .chat-history { max-height: 430px; }
+}
+
+.lecture-chat-intro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: #a3a3a3;
+  font-size: 12px;
+}
+.chat-status-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #d4d4d4;
+}
+.lecture-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+}
+.lecture-suggestions button {
+  border: 1px solid #343434;
+  background: #191919;
+  color: #d4d4d4;
+  border-radius: 999px;
+  padding: 8px 11px;
+  font-size: 11px;
+  line-height: 1.3;
+}
+.lecture-suggestions button:hover {
+  background: #272727;
+  border-color: #666;
+  color: #fff;
+}

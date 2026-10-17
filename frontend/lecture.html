@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CourseMind — Lecture</title>
+
+    <link rel="stylesheet" href="lecture.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         TOP BAR
+    ========================== -->
+
+    <header class="topbar">
+
+        <div class="logo">
+            CourseMind
+        </div>
+
+        <a href="index.html" class="back">
+            ← Back to Dashboard
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="container">
+
+
+        <!-- Loading -->
+
+        <div id="loading" class="loading">
+
+            Loading lecture...
+
+        </div>
+
+
+        <!-- Lecture content -->
+
+        <div id="lectureContent" style="display: none;">
+
+
+            <!-- =========================
+                 LECTURE INFORMATION
+            ========================== -->
+
+            <section class="lecture-header">
+
+                <div id="lectureNumber" class="lecture-number">
+                    Lecture
+                </div>
+
+                <h1 id="lectureTitle" class="lecture-title">
+                    Lecture Title
+                </h1>
+
+                <div id="lectureMeta" class="lecture-meta">
+                    CourseMind Lecture
+                </div>
+
+
+                <div id="lectureProgress" class="lecture-progress">
+
+                    <div id="progressText" class="progress-text">
+                        Lecture 1 of 144
+                    </div>
+
+                    <div class="progress-bar">
+
+                    </div>
+                        <div
+                            id="progressFill"
+                            class="progress-fill">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="completion-section">
+
+                    <button
+                        id="completeLecture"
+                        class="complete-button">
+                        ✓ Mark as Completed
+                    </button>
+
+                </div>
+
+                <div class="lecture-navigation">
+
+                    <button id="previousLecture" class="navigation-button">
+                        ← Previous
+                    </button>
+
+                    <button id="nextLecture" class="navigation-button">
+                        Next →
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 YOUTUBE VIDEO
+            ========================== -->
+
+            <section class="video-container">
+
+                <iframe
+                    id="youtubePlayer"
+                    src=""
+                    title="CourseMind Lecture"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+
+            </section>
+
+
+            <!-- =========================
+                 BOTTOM SECTION
+            ========================== -->
+
+            <section class="bottom-section">
+
+
+                <!-- =========================
+                     ABOUT LECTURE
+                ========================== -->
+
+                <div class="card lecture-summary-card">
+
+                    <h2>
+                        About this lecture
+                    </h2>
+
+                    <div id="lectureSummary" class="lecture-summary">
+
+                        <div class="summary-loading">
+                            Generating lecture summary...
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     COURSE MIND AI
+                ========================== -->
+
+                <div class="card ai-card">
+
+                    <h2>
+                        ✨ CourseMind AI
+                    </h2>
+
+                    <p>
+
+                        Ask questions about this
+                        lecture using the processed
+                        course content.
+
+                    </p>
+
+
+                    <!-- =========================
+                         QUESTION INPUT
+                    ========================== -->
+
+                    <div class="lecture-chat-intro">
+                        <span class="chat-status-dot" aria-hidden="true"></span>
+                        <span>Answers grounded in this lecture's content</span>
+                    </div>
+
+                    <div class="lecture-suggestions" aria-label="Suggested questions">
+                        <button type="button" data-lecture-q="Summarize this lecture">Summarize this lecture</button>
+                        <button type="button" data-lecture-q="Explain the key concepts">Explain key concepts</button>
+                        <button type="button" data-lecture-q="Give me a quiz on this lecture">Quiz me</button>
+                    </div>
+
+                    <div class="question-box">
+                        <input
+                            type="text"
+                            id="questionInput"
+                            aria-label="Ask CourseMind AI about this lecture"
+                            placeholder="Ask about this lecture..."
+                            autocomplete="off"
+                        >
+                        <button
+                            id="askAI"
+                            class="ai-button"
+                            type="button"
+                            aria-label="Send question">
+                            Ask AI
+                        </button>
+                    </div>
+
+
+                    <!-- =========================
+                         ERROR
+                    ========================== -->
+
+                    <div
+                        id="aiError"
+                        class="ai-error"
+                        style="display: none;">
+                    </div>
+
+
+                    <!-- =========================
+                    AI CHAT HISTORY
+                    ========================== -->
+
+                    <div
+                        id="chatHistory"
+                        class="chat-history">
+                    </div>
+
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- JavaScript -->
+
+    <script src="lecture.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CourseMind — Add Your First Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="onboarding-page" data-page="onboarding">
+<div class="onboarding-shell">
+  <header class="onboarding-top">
+    <div class="brand">
+      <div class="brand-icon">✦</div>
+      <div><div class="brand-name">Course<span>Mind</span></div><small>Your AI Learning Companion</small></div>
+    </div>
+    <span class="step">STEP 1 OF 1</span>
+  </header>
+
+  <main class="onboarding-main">
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+    <section class="welcome-copy">
+      <div class="welcome-icon">✦</div>
+      <div class="eyebrow">WELCOME TO COURSEMIND</div>
+      <h1>Turn your course into<br><span>an AI-powered classroom.</span></h1>
+      <p>Start by adding a YouTube course or playlist. CourseMind will process the lectures and build a searchable learning space around them.</p>
+
+      <div class="benefits">
+        <div><span>✓</span><b>Understand</b><small>Ask questions from lecture content.</small></div>
+        <div><span>✓</span><b>Learn</b><small>Search across your entire course.</small></div>
+        <div><span>✓</span><b>Track</b><small>Keep your learning progress organized.</small></div>
+      </div>
+    </section>
+
+    <section class="add-course-card">
+      <div class="card-icon">▶</div>
+      <h2>Add your first course</h2>
+      <p>Paste a YouTube video or playlist URL to get started.</p>
+
+      <form id="courseForm">
+        <label for="courseUrl">YouTube URL</label>
+        <div class="url-input">
+          <span>↗</span>
+          <input id="courseUrl" required placeholder="https://www.youtube.com/playlist?list=..." autocomplete="off">
+        </div>
+
+        <label for="courseName">Course name <small>optional</small></label>
+        <input class="normal-input" id="courseName" placeholder="e.g. DSA Series by Shradha Khapra">
+
+        <button class="start-btn" type="submit">Add Course <span>→</span></button>
+      </form>
+
+      <div class="secure-note">✦ Your course stays inside your CourseMind workspace.</div>
+      <button class="demo-link" id="demo">Explore with sample course</button>
+    </section>
+  </main>
+
+  <footer class="onboarding-footer">CourseMind · Learn from the content you already love.</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CourseMind — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="dashboard">
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">✦</div>
+      <div><div class="brand-name">Course<span>Mind</span></div><small>Your AI Learning Companion</small></div>
+    </div>
+
+    <nav>
+      <button class="nav active" data-nav="Dashboard">⌂ <span>Dashboard</span></button>
+      <button class="nav" data-nav="My Courses">▣ <span>My Courses</span></button>
+      <button class="nav" data-nav="AI Tutor">◌ <span>AI Tutor</span></button>
+      <button class="nav" data-nav="Lecture Notes">▤ <span>Lecture Notes</span></button>
+      <button class="nav" data-nav="Progress">▥ <span>Progress</span></button>
+      <button class="nav" data-nav="Bookmarks">♡ <span>Bookmarks</span></button>
+      <button class="nav" data-nav="Settings">⚙ <span>Settings</span></button>
+    </nav>
+
+    <div class="promo">
+      <div class="promo-icon">🎓</div>
+      <h3>Learn Smarter<br>with AI</h3>
+      <p>Turn any YouTube course into an interactive learning experience.</p>
+      <button id="promo">→</button>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div class="mobile-brand">Course<span>Mind</span></div>
+      <div class="search">
+        <b>⌕</b>
+        <input id="search" placeholder="Search lectures, topics or ask anything...">
+        <kbd>Ctrl K</kbd>
+      </div>
+      <div class="top-right">
+        <span class="bell">♧</span>
+        <div class="avatar">S</div>
+        <span>Student</span>
+        <span>⌄</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="hero">
+        <div>
+          <h1>Good Afternoon! 👋</h1>
+          <p>Continue your learning journey with CourseMind.</p>
+        </div>
+        <button class="outline-add" id="addCourseTop">＋ Add New Course</button>
+      </section>
+
+      <section class="stats">
+        <div class="stat"><i class="purple">▶</i><div><b>1</b><small>Active Course</small></div></div>
+        <div class="stat"><i class="blue">▣</i><div><b>144</b><small>Total Lectures</small></div></div>
+        <div class="stat"><i class="green">✓</i><div><b>3</b><small><b id="completedCount">0</b></small></div></div>
+        <div class="stat"><i class="violet">◷</i><div><b>12.5 hrs</b><small>Learning Time</small></div></div>
+      </section>
+
+      <div class="layout">
+        <div>
+
+          <section class="panel course">
+              <div class="section-head">
+                  <h2>Current Course</h2>
+
+                  <select id="courseSelector" aria-label="Select active course">
+                  </select>
+
+                  <button class="text-btn" id="manageCourses">
+                      My Courses →
+                  </button>
+              </div>
+
+              <div class="course-row">
+                  <img
+                      id="currentCourseImage"
+                      src=""
+                      alt="Selected course thumbnail"
+                  >
+
+                  <div class="course-info">
+                      <h3 id="currentCourseTitle">Loading course...</h3>
+
+                      <small id="currentCourseMeta"></small>
+
+                      <p id="currentCourseDescription"></p>
+
+                      <div class="progress">
+                          <div>
+                              <span id="currentCourseProgressFill"></span>
+                          </div>
+
+                          <label id="currentCourseProgressText"></label>
+                          <label id="currentCourseLectureCount"></label>
+                      </div>
+                  </div>
+
+                  <button class="primary" id="continue">
+                      ▶ Continue Learning
+                  </button>
+              </div>
+          </section>
+
+
+          <section class="panel">
+            <div class="section-head">
+              <h2>Recent Lectures</h2>
+              <button id="all">View All →</button>
+            </div>
+            <div class="lectures" id="lectures"></div>
+            <div class="lecture-pagination" id="lecturePagination" aria-label="Lecture pages">
+              <span id="lecturePageInfo">Page 1</span>
+              <div class="lecture-page-actions">
+                <button type="button" id="lecturePrev" disabled>← Previous</button>
+                <button type="button" id="lectureNext">Next 8 →</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="features">
+            <button class="feature"><i class="purple">◉</i><div><b>Ask Anything</b><small>Get clear explanations from your course content.</small></div><span>→</span></button>
+            <button class="feature"><i class="pink">▤</i><div><b>Smart Notes</b><small>Automatically generate notes from lectures.</small></div><span>→</span></button>
+            <button class="feature"><i class="blue">◎</i><div><b>Track Progress</b><small>See your learning journey and stay consistent.</small></div><span>→</span></button>
+          </section>
+        </div>
+
+        <aside class="ai">
+          <div class="ai-logo">✦</div>
+          <h2>CourseMind AI</h2>
+          <p>Your Personal Course Tutor</p>
+          <div class="message"><b>Hi! I'm CourseMind 👋</b><br>Ask me anything about your course.<br>I’ll answer using the actual lecture content.</div>
+          <div class="quick">
+            <button data-q="Explain the current lecture">▤ <span>Explain the current lecture</span> ›</button>
+            <button data-q="Give me a summary of this topic">✦ <span>Give me a summary of this topic</span> ›</button>
+            <button data-q="Quiz me on arrays">✪ <span>Quiz me on arrays</span> ›</button>
+            <button data-q="What is time complexity?">&lt;/&gt; <span>What is time complexity?</span> ›</button>
+          </div>
+          <div id="chat"></div>
+          <form id="chatForm"><input id="question" placeholder="Ask your question..."><button>➤</button></form>
+        </aside>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="cm-chat-overlay" id="chatOverlay" aria-hidden="true">
+  <div class="cm-chat-backdrop" id="chatBackdrop"></div>
+  <section class="cm-chat-window" role="dialog" aria-modal="true" aria-labelledby="cmChatTitle">
+    <header class="cm-chat-header">
+      <button type="button" class="cm-chat-back" id="closeChat" aria-label="Back to dashboard">←</button>
+      <div class="cm-chat-brand-icon">✦</div>
+      <div class="cm-chat-heading"><strong id="cmChatTitle">CourseMind AI</strong><span><i></i> Course-aware assistant</span></div>
+      <button type="button" class="cm-chat-clear" id="clearChat">New chat</button>
+    </header>
+    <div class="cm-chat-context" id="chatContext">Ask anything about your active course.</div>
+    <div class="cm-chat-messages" id="fullChatMessages" aria-live="polite">
+      <div class="cm-chat-welcome" id="fullChatWelcome">
+        <div class="cm-chat-welcome-icon">✦</div><h2>What would you like to learn?</h2>
+        <p>Ask a question about your course. I'll use the available lecture content to help you understand it.</p>
+        <div class="cm-chat-suggestions">
+          <button type="button" data-full-q="Explain the most important concepts in this course">Explain key concepts <span>↗</span></button>
+          <button type="button" data-full-q="Give me a summary of this course">Summarize this course <span>↗</span></button>
+          <button type="button" data-full-q="Quiz me on the topics covered in this course">Quiz me <span>↗</span></button>
+        </div>
+      </div>
+    </div>
+    <form class="cm-chat-composer" id="fullChatForm">
+      <textarea id="fullChatQuestion" rows="1" placeholder="Message CourseMind..." aria-label="Ask CourseMind a question"></textarea>
+      <button type="submit" id="fullChatSend" aria-label="Send message">↑</button>
+      <div class="cm-chat-disclaimer">CourseMind answers using the selected course's indexed content when available.</div>
+    </form>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

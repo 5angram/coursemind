@@ -10,3 +10,7 @@ __pycache__/
 
 # VS Code settings
 .vscode/
+
+
+# CourseMind generated data
+backend/data/
