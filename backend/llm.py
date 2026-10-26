@@ -3,7 +3,7 @@ import json
 
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "llama3.2:latest"
+MODEL = "qwen2.5:7b"
 
 
 def generate_answer(
@@ -22,6 +22,7 @@ def generate_answer(
             "prompt": prompt,
             "stream": True,
             "options": {
+                "num_ctx": 4096,
                 "num_predict": max_tokens,
                 "temperature": temperature,
                 "top_p": 0.9,
