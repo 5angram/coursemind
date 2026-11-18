@@ -30,7 +30,7 @@ def generate_answer(
             }
         },
         stream=True,
-        timeout=(10, 180)
+        timeout=(10, 600)
     )
 
     print(
