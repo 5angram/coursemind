@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI ,Query
 from pydantic import BaseModel, HttpUrl
 from fastapi.middleware.cors import CORSMiddleware
 from urllib.parse import urlparse, parse_qs
 import yt_dlp
+from backend.database import get_db_connection
 from youtube_transcript_api import YouTubeTranscriptApi
 from backend.chunker import chunk_test
 from backend.retriever import retrieve , retrieve_course
@@ -523,15 +524,6 @@ def ask_question(request: AskRequest):
 # -----------------------------------------
 from backend.question_handler import handle_course_question
 
-
-@app.post("/ask/course")
-def ask_course_question(request: CourseAskRequest):
-    return handle_course_question(
-        playlist_id=request.playlist_id,
-        question=request.question,
-        history=request.history,
-        top_k=request.top_k,
-    )
 
 
 # -----------------------------------------
@@ -1088,3 +1080,311 @@ FINAL LECTURE SUMMARY:
                 "error":
                     str(e)
             }
+
+
+def log_learning_event(
+    playlist_id: str,
+    event_type: str,
+    youtube_video_id: str = None,
+):
+    connection = get_db_connection()
+
+    try:
+        print("Connection autocommit:", connection.autocommit)
+
+        with connection.cursor() as cursor:
+
+            cursor.execute("""
+                SELECT current_database(),
+                       current_schema(),
+                       current_user;
+            """)
+
+            print("Connection details:", cursor.fetchone())
+
+            cursor.execute("""
+                SELECT COUNT(*)
+                FROM public.learning_events;
+            """)
+
+            print("Rows before insert:", cursor.fetchone()[0])
+
+            cursor.execute("""
+                SELECT course_id
+                FROM public.courses
+                WHERE playlist_id = %s;
+            """, (playlist_id,))
+
+            course = cursor.fetchone()
+
+            if course is None:
+                raise ValueError("Course not found")
+
+            course_id = course[0]
+            database_video_id = None
+
+            if youtube_video_id:
+                cursor.execute("""
+                    SELECT video_id
+                    FROM public.videos
+                    WHERE course_id = %s
+                      AND youtube_video_id = %s;
+                """, (course_id, youtube_video_id))
+
+                video = cursor.fetchone()
+
+                if video is None:
+                    raise ValueError("Video not found")
+
+                database_video_id = video[0]
+
+            cursor.execute("""
+                INSERT INTO public.learning_events
+                    (course_id, video_id, event_type)
+                VALUES (%s, %s, %s)
+                RETURNING event_id;
+            """, (course_id, database_video_id, event_type))
+
+            event_id = cursor.fetchone()[0]
+
+            print("Inserted event ID:", event_id)
+
+            cursor.execute("""
+                SELECT COUNT(*)
+                FROM public.learning_events;
+            """)
+
+            print("Rows before commit:", cursor.fetchone()[0])
+
+        connection.commit()
+
+        print("Transaction committed.")
+
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT COUNT(*)
+                FROM public.learning_events;
+            """)
+
+            print("Rows after commit:", cursor.fetchone()[0])
+
+        return event_id
+
+    except Exception:
+        connection.rollback()
+        raise
+
+    finally:
+        connection.close()
+
+
+def log_course_qa_interaction(
+    playlist_id: str,
+    question: str,
+    answer: str,
+    sources:list,
+):
+    """Save a completed course Q&A interaction to PostgreSQL."""
+
+    connection = get_db_connection()
+
+    try:
+        with connection.cursor() as cursor:
+            # Find the database course associated with this playlist.
+            cursor.execute(
+                """
+                SELECT course_id
+                FROM courses
+                WHERE playlist_id = %s;
+                """,
+                (playlist_id,),
+            )
+
+            course = cursor.fetchone()
+
+            if course is None:
+                raise ValueError(
+                    f"Course not found for playlist: {playlist_id}"
+                )
+
+            course_id = course[0]
+
+            # Save the question and its generated answer.
+            cursor.execute(
+                """
+                INSERT INTO qa_interactions
+                    (course_id, question, answer)
+                VALUES (%s, %s, %s)
+                RETURNING qa_id;
+                """,
+                (course_id, question, answer),
+            )
+
+            qa_id = cursor.fetchone()[0]
+
+            for rank , source in enumerate(sources ,start=1):
+                cursor.execute(
+                    """
+                    SELECT video_id
+                    FROM videos
+                    WHERE course_id = %s
+                    AND youtube_video_id = %s;
+                    """,
+                    (course_id , source["video_id"]),
+                )
+                video = cursor.fetchone()
+
+                if video is None:
+                    raise ValueError(
+                        f"video not found{source['video_id']}"
+                    )
+
+                database_video_id = video[0]
+
+                cursor.execute(
+                    """
+                    INSERT INTO retrieval_results(qa_id,video_id,chunk_id,similarity,rank)
+                    VALUES (%s,%s,%s,%s,%s);
+                    """,
+                    (
+                        qa_id,
+                        database_video_id,
+                        source["chunk_id"],
+                        source["similarity"],
+                        rank,
+                    ),
+                )
+
+        connection.commit()
+        print(
+            f"Q&A interaction saved. QA ID: {qa_id}")
+        print(
+            f"Retrieval results saved: {len(sources)}")
+
+        return qa_id
+
+    except Exception:
+        connection.rollback()
+        raise
+
+    finally:
+        connection.close()
+
+
+
+@app.post("/ask/course")
+def ask_course_question(request: CourseAskRequest):
+
+    print("DEBUG: /ask/course endpoint is active")
+    print("DEBUG: playlist_id =", repr(request.playlist_id))
+    
+    # Run the existing Q&A pipeline unchanged.
+    result = handle_course_question(
+        playlist_id=request.playlist_id,
+        question=request.question,
+        history=request.history,
+        top_k=request.top_k,
+    )
+
+    # Log successful pipeline responses without breaking the answer
+    # if the database logging operation fails.
+    if (
+        isinstance(result, dict)
+        and result.get("answer")
+        and not result.get("error")
+    ):
+        try:
+            print("Logging playlist_id:", repr(request.playlist_id))
+            print("Answer available:", bool(result.get("answer")))
+            qa_id = log_course_qa_interaction(
+                playlist_id=request.playlist_id.strip(),
+                question=request.question,
+                answer=result["answer"],
+                sources=result.get("sources",[])
+            )
+
+            print(f"Q&A interaction saved. QA ID: {qa_id}")
+
+        except Exception as error:
+            print("Q&A logging failed:", str(error))
+
+    return result
+
+@app.get("/db/courses")
+def list_course():
+    connection = get_db_connection()
+
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT 
+                    course_id,
+                    playlist_id,
+                    course_name,
+                    total_videos,
+                    created_at 
+                FROM courses
+                ORDER BY course_id;
+                """
+            )
+
+            rows = cursor.fetchall()
+
+            return {
+                "count":len(rows),
+                "courses": [
+                    {
+                        "course_id":row[0],
+                        "playlist_id":row[1],
+                        "course_name":row[2],
+                        "total_videos":row[3],
+                        "created_at":row[4]
+                    }
+                    for row in rows
+                ]
+            }
+    finally:
+        connection.close()
+
+@app.get("/db/courses/{course_id}/videos")
+def list_course_videos(
+    course_id: int,
+    limit: int= Query(default=20,ge=1,le=100),
+):
+    if limit < 1 or limit > 100:
+        return {"message": "limit must be between 1 and 100"}
+
+    connection = get_db_connection()
+
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT video_number, youtube_video_id, title,
+                       processing_status
+                FROM videos
+                WHERE course_id = %s
+                ORDER BY video_number
+                LIMIT %s;
+                """,       
+                (course_id , limit),
+            )
+
+            rows = cursor.fetchall()
+
+            return{
+                "course_id":course_id,
+                "count": len(rows),
+                "videos":[
+                    {
+                        "video_number":row[0],
+                        "youtube_video_id":row[1],
+                        "title":row[2],
+                        "processing_status":row[3]
+                    }
+                    for row in rows
+                ],
+            }
+    finally:
+        connection.close()
